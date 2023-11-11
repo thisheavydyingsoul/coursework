@@ -1,0 +1,23 @@
+﻿<Window x:Class="CourseWorkAdmin.Views.LogsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWorkAdmin.Views"
+        mc:Ignorable="d"
+        Title="Логи" Height="450" Width="800">
+    <Grid Style="{StaticResource GridStyle}">
+        <DataGrid Name ="LogsList" AutoGenerateColumns="False" HeadersVisibility="None">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Contents}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

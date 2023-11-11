@@ -1,0 +1,193 @@
+﻿<Window x:Class="CourseWorkAdmin.Views.OfficeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWorkAdmin.Views"
+        mc:Ignorable="d"
+        Title="Администрирование" Height="1500" Width="2500" WindowState="Maximized">
+    <Grid Style="{StaticResource GridStyle}">
+        <TabControl>
+            <TabItem Name="DevicesTab">
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Устройства"/>
+                </TabItem.Header>
+                <Grid Style="{StaticResource GridStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="37"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Style="{StaticResource GridStyle}" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="400"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Column="0" Text="Поиск по названию"/>
+                        <TextBox Name ="searchDevicesBox" Grid.Column="1" KeyUp="SearchDevicesBox_KeyUp" Width="400" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Button Click="AddDevice" Content="Добавить устройство" Grid.Column="1" Grid.Row="2" Width="300"/>
+                    <DataGrid Name="DevicesList" Grid.Row="1" AutoGenerateColumns="False" FontSize="15" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding ="{Binding Id}" Width="200"/>
+                            <DataGridTextColumn Header="Тип" Binding ="{Binding Type}" Width="200"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="200"/>
+                            <DataGridTextColumn Header="Состояние" Binding ="{Binding Condition}" Width="200"/>
+                            <DataGridTextColumn Header="Дневной тариф, руб/час" Binding="{Binding DayRate}" Width="200"/>
+                            <DataGridTextColumn Header="Ночной тариф, руб/час" Binding ="{Binding NightRate}" Width="200"/>
+                            <DataGridTemplateColumn Width="250">
+                                <DataGridTemplateColumn.CellTemplate >
+                                    <DataTemplate>
+                                        <Button 
+                                            Click="ShowDeviceDescription" 
+                                            HorizontalAlignment="Center" 
+                                            VerticalAlignment="Stretch" 
+                                            Content = "Подробности"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="250">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ChangeDevice" 
+                                                HorizontalAlignment="Center" 
+                                                VerticalAlignment="Stretch" 
+                                                Content="Изменить"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="250">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button 
+                                            Click="ChangeGameList" 
+                                            HorizontalAlignment="Center" 
+                                            VerticalAlignment="Stretch" 
+                                            Content = "Список игр"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Name="GamesTab">
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Игры"/>
+                </TabItem.Header>
+                <Grid Style="{StaticResource GridStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="37"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Style="{StaticResource GridStyle}" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="400"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Column="0" Text="Поиск по названию"/>
+                        <TextBox Name ="searchGamesBox" Grid.Column="1" KeyUp="SearchGamesBox_KeyUp" Width="400" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Button Click ="AddGame" Content="Добавить игру" Grid.Column="1" Grid.Row ="3" Width="300"/>
+                    <DataGrid Name="GamesList" Grid.Row="1" AutoGenerateColumns="False" FontSize="18" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" Binding ="{Binding Name}" Width="200"/>
+                            <DataGridTemplateColumn Width="250">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ShowGameDescription" 
+                                                HorizontalAlignment="Center" 
+                                                VerticalAlignment="Stretch" 
+                                                Content="Подробности"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="250">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ChangeGame" 
+                                                HorizontalAlignment="Center" 
+                                                VerticalAlignment="Stretch" 
+                                                Content="Изменить"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="250">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ChangeDeviceList" 
+                                                HorizontalAlignment="Center" 
+                                                VerticalAlignment="Stretch" 
+                                                Content="Список устройств"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Name="PromosTab">
+                <TabItem.Header >
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Акции"/>
+                </TabItem.Header>
+                <Grid Style="{StaticResource GridStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Style="{StaticResource GridStyle}" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="400"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Column="0" Text="Поиск по описанию"/>
+                        <TextBox Name ="searchEventsBox" Grid.Column="1" KeyUp="SearchGamesBox_KeyUp" Width="400" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Button Click ="AddPromo" Content="Добавить акцию" Grid.Column="1" Grid.Row="2" Width="300"/>
+                    <DataGrid Name="PromosList" Grid.Row="1" AutoGenerateColumns="False" FontSize="18" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding ="{Binding Id}"/>
+                            <DataGridTextColumn Header="Дата начала" Binding ="{Binding StartDate}"/>
+                            <DataGridTextColumn Header="Дата окончания" Binding ="{Binding EndDate}"/>
+                            <DataGridTextColumn Header="Скидка, %" Binding ="{Binding Coefficient}"/>
+                            <DataGridTemplateColumn Width="250">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ShowPromoDescription" 
+                                                HorizontalAlignment="Center" 
+                                                VerticalAlignment="Stretch" 
+                                                Content="Подробности"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="250">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ChangePromo" 
+                                                HorizontalAlignment="Center" 
+                                                VerticalAlignment="Stretch" 
+                                                Content="Изменить"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

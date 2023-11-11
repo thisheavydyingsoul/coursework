@@ -1,0 +1,21 @@
+﻿<Window x:Class="CourseWorkAdmin.Views.AdminsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWorkAdmin.Views"
+        mc:Ignorable="d"
+        Title="Администраторы офиса" Height="450" Width="800" WindowState="Maximized">
+    <Grid Style="{StaticResource GridStyle}">
+        <DataGrid Name ="adminList" AutoGenerateColumns="False" HeadersVisibility="None">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Никнейм" Binding ="{Binding Username}"/>
+                <DataGridTextColumn Header="Полное имя" Binding ="{Binding Fullname}"/>
+                <DataGridTextColumn Header="Номер телефона" Binding="{Binding Phone}"/>
+                <DataGridTextColumn Header="E-mail" Binding ="{Binding Email}"/>
+                <DataGridCheckBoxColumn Header="Действующий сотрудник" Binding="{Binding IsActive}" Width="200"/>
+                <DataGridCheckBoxColumn Header="Работник с персоналом" Binding ="{Binding IsHr}" Width="200"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

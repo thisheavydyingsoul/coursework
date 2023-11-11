@@ -1,0 +1,123 @@
+﻿<Window x:Class="CourseWorkAdmin.Views.HRWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWorkAdmin" 
+        xmlns:views="clr-namespace:CourseWorkAdmin.Views"
+        xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Администрирование" Height="1500" Width="2500" WindowState="Maximized">
+    <Grid Style="{StaticResource GridStyle}">
+        <TabControl>
+            <TabItem Name="AdminsTab">
+                <TabItem.Header>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Администраторы"/>
+                </TabItem.Header>
+                <Grid Style="{StaticResource GridStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Style="{StaticResource GridStyle}" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="400"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Column="0" Text="Поиск по никнейму или ФИО"/>
+                        <TextBox Name ="searchAdminBox" Grid.Column="1" KeyUp="SearchAdminBox_KeyUp" VerticalAlignment="Center" Width="400"/>
+                    </Grid>
+                    <Button Click="AddAdmin" Content="Добавить администратора" HorizontalAlignment="Right"  Grid.Row ="2" Grid.Column="1" Width="300" Margin="0 0 0 0"/>
+                    <DataGrid Name="AdminsList" Grid.Row="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" FontSize="15">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Никнейм" Binding ="{Binding Username}"/>
+                            <DataGridTextColumn Header="Полное имя" Binding ="{Binding Fullname}"/>
+                            <DataGridTextColumn Header="Офис" Binding ="{Binding Office.Adress}"/>
+                            <DataGridTextColumn Header="Номер телефона" Binding="{Binding Phone}"/>
+                            <DataGridTextColumn Header="E-mail" Binding ="{Binding Email}"/>
+                            <DataGridCheckBoxColumn Header="Действующий сотрудник" Binding="{Binding IsActive}" Width="200"/>
+                            <DataGridCheckBoxColumn Header="Работник с персоналом" Binding ="{Binding IsHr}" Width="200"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button 
+                                            Click="ShowLogs" 
+                                            HorizontalAlignment="Stretch" 
+                                            VerticalAlignment="Stretch" 
+                                            Content = "Просмотреть логи"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ChangeAdmin" 
+                                                HorizontalAlignment="Stretch" 
+                                                VerticalAlignment="Stretch" 
+                                                Content=" Изменить данные"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Name="Offices" IsSelected="True">
+                <TabItem.Header >
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Офисы"/>
+                </TabItem.Header>
+                <Grid Style="{StaticResource GridStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Style="{StaticResource GridStyle}" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="400"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Column="0" Text="Поиск по ID или адресу"/>
+                        <TextBox Name ="searchOfficeBox" Grid.Column="1" VerticalAlignment="Center" KeyUp="SearchOfficeBox_KeyUp" Width="400"/>
+                    </Grid>
+                    <Button Click ="AddOffice" Content="Добавить офис" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Width="300"/>
+                    <DataGrid Name="OfficeList" Grid.Row="1" AutoGenerateColumns="False" FontSize="18" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding ="{Binding Id}"/>
+                            <DataGridTextColumn Header="Адрес" Binding ="{Binding Adress}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ShowAdmins" 
+                                                HorizontalAlignment="Stretch" 
+                                                VerticalAlignment="Stretch" 
+                                                Content="Показать список сотрудников"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ChangeOffice" 
+                                                HorizontalAlignment="Stretch" 
+                                                VerticalAlignment="Stretch" 
+                                                Content=" Изменить данные"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
