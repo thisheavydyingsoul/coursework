@@ -21,7 +21,6 @@ namespace CourseWorkAdmins.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DeviceGame>().HasKey(dg => new { dg.DeviceId, dg.GameName });
-
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

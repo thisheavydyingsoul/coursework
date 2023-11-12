@@ -31,4 +31,5 @@ namespace CourseWorkAdmins.Models
         public byte[]? Picture { get; set; }
         public ICollection<DeviceGame>? DevicesGames { get; set; }
         public ICollection<Rent>? Rents { get; set; }
+    }
 }
