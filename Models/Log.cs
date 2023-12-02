@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CourseWorkAdmins.Models
+namespace CourseWorkAdmin.Models
 {
     public class Log
     {

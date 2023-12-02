@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.RightsManagement;
 
-namespace CourseWorkAdmins.Models
+namespace CourseWorkAdmin.Models
 {
     public class Administrator
     {
@@ -21,6 +21,7 @@ namespace CourseWorkAdmins.Models
 
 
         [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
         public string Phone { get; set; } = null!;
 
 

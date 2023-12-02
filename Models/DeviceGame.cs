@@ -1,4 +1,4 @@
-﻿using CourseWorkAdmins.Models;
+﻿using CourseWorkAdmin.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

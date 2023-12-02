@@ -1,6 +1,6 @@
 ﻿using CourseWorkAdmin.Models;
-using CourseWorkAdmins.Data;
-using CourseWorkAdmins.Models;
+using CourseWorkAdmin.Data;
+using CourseWorkAdmin.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -79,7 +79,12 @@ namespace CourseWorkAdmin.Views
             DeviceDescription dd = new DeviceDescription(selected);
             dd.Show();
         }
-
+        private void ShowRents(object sender, RoutedEventArgs e)
+        {
+            Device selected = (Device)DevicesList.SelectedItem;
+            RentList rl = new RentList(selected);
+            rl.Show();
+        }
         private void ShowGameDescription(object sender, RoutedEventArgs e)
         {
             Game selected = (Game)GamesList.SelectedItem;

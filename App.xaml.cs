@@ -13,7 +13,7 @@ namespace CourseWorkAdmin
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            DataHelper.username = "Zossa";
+            DataHelper.username = "whl";
             MainWindow = new Views.OfficeWindow();
             MainWindow.Show();
             base.OnStartup(e);

@@ -67,7 +67,7 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Name="Offices" IsSelected="True">
+            <TabItem Name="Offices">
                 <TabItem.Header >
                     <TextBlock Style="{StaticResource TextBlockStyle}" Text="Офисы"/>
                 </TabItem.Header>
@@ -116,6 +116,62 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Name="Statistics">
+                <TabItem.Header >
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Text="Статистика"/>
+                </TabItem.Header>
+                <Grid Style="{StaticResource GridStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Text="Общий заработок в этом месяце: " Grid.Row="0"/>
+                        <TextBlock Name ="SumBox" Style="{StaticResource TextBlockStyle}" Grid.Row="0" Grid.Column="1"/>
+                        <DataGrid Name="RevenueList" Grid.Row="1" AutoGenerateColumns="False" FontSize="18" Grid.ColumnSpan="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Адрес" Binding ="{Binding Key}"/>
+                                <DataGridTextColumn Header="Выручка, руб." Binding ="{Binding Value}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Text="Распределение заработка по устройствам" Grid.Row="0"/>
+                        <DataGrid Name="DeviceRevenueList" Grid.Row="1" AutoGenerateColumns="False" FontSize="18" Grid.ColumnSpan="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Название" Binding ="{Binding Key}"/>
+                                <DataGridTextColumn Header="Выручка, руб." Binding ="{Binding Value}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Text="Распределение заработка по посетителям" Grid.Row="0"/>
+                        <DataGrid Name="ClientRevenueList" Grid.Row="1" AutoGenerateColumns="False" FontSize="18" Grid.ColumnSpan="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Никнейм" Binding ="{Binding Key}"/>
+                                <DataGridTextColumn Header="Выручка, руб." Binding ="{Binding Value}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

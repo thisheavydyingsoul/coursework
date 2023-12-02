@@ -1,5 +1,5 @@
-﻿using CourseWorkAdmins.Data;
-using CourseWorkAdmins.Models;
+﻿using CourseWorkAdmin.Data;
+using CourseWorkAdmin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +36,7 @@ namespace CourseWorkAdmin.Views
             device = selected;
             namebox.Text = device.Name;
             typebox.Text = device.Type;
-            conditionbox.Text = device.Condition;
+            conditionbox.IsChecked = device.Condition;
             dayratebox.Text = device.DayRate.ToString();
             nightratebox.Text = device.NightRate.ToString();
             descriptionbox.Text = device.Description;
@@ -68,7 +68,7 @@ namespace CourseWorkAdmin.Views
             if (
                 namebox.Text == device.Name &&
                 typebox.Text == device.Type &&
-                conditionbox.Text == device.Condition &&
+                conditionbox.IsChecked == device.Condition &&
                 dayratebox.Text == device.DayRate.ToString() &&
                 nightratebox.Text == device.NightRate.ToString() &&
                 descriptionbox.Text == device.Description &&
@@ -90,9 +90,9 @@ namespace CourseWorkAdmin.Views
                 log.Contents += (changed) ? "тип" : ", тип";
                 changed = true;
             }
-            if (conditionbox.Text != device.Condition)
+            if (conditionbox.IsChecked != device.Condition)
             {
-                device.Condition = typebox.Text;
+                device.Condition = (bool)conditionbox.IsChecked;
                 log.Contents += (changed) ? "состояние" : ", состояние";
                 changed = true;
             }

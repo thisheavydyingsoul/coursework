@@ -23,14 +23,14 @@
         </Grid.RowDefinitions>
         <TextBlock Style ="{StaticResource TextBlockStyle}" Grid.Row="0" Text="Название устройства"/>
         <TextBlock Style ="{StaticResource TextBlockStyle}" Grid.Row="1" Text="Тип"/>
-        <TextBlock Style ="{StaticResource TextBlockStyle}" Grid.Row="2" Text="Состояние"/>
+        <TextBlock Style ="{StaticResource TextBlockStyle}" Grid.Row="2" Text="Исправно"/>
         <TextBlock Style ="{StaticResource TextBlockStyle}" Grid.Row="3" Text="Дневной тариф руб/час"/>
         <TextBlock Style ="{StaticResource TextBlockStyle}" Grid.Row="4" Text="Ночной тариф руб/час"/>
         <TextBlock Style ="{StaticResource TextBlockStyle}" Grid.Row="5" Text="Описание"/>
         <TextBlock Style ="{StaticResource TextBlockStyle}" Grid.Row="6" Text="Фото"/>
         <TextBox Name="namebox" Grid.Row="0" Grid.Column="1" Width="300"  Height="30"/>
         <TextBox Name="typebox" Grid.Row="1" Grid.Column="1" Width="300"  Height="30"/>
-        <TextBox Name="conditionbox" Grid.Row="2" Grid.Column="1" Width="300"  Height="30"/>
+        <CheckBox Name="conditionbox" Grid.Row="2" Grid.Column="1" Width="300"  Height="30"/>
         <TextBox Name="dayratebox" Grid.Row="3" Grid.Column="1" Width="300"  Height="30" PreviewTextInput="NumberValidationTextBox"/>
         <TextBox Name="nightratebox" Grid.Row="4" Grid.Column="1" Width="300"  Height="30" PreviewTextInput="NumberValidationTextBox"/>
         <TextBox Name="descriptionbox" Grid.Row="5" Grid.Column="1" Width="300"  Height="200" VerticalContentAlignment="Center" TextWrapping="Wrap"/>

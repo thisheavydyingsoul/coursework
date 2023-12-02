@@ -2,8 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using CourseWorkAdmins.Models;
-using CourseWorkAdmins.Data;
+using CourseWorkAdmin.Models;
+using CourseWorkAdmin.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 

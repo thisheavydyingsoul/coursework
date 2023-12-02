@@ -1,11 +1,11 @@
-﻿using CourseWorkAdmins.Data;
+﻿using CourseWorkAdmin.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using CourseWorkAdmins.Models;
+using CourseWorkAdmin.Models;
 using System.Windows.Media.Imaging;
 using CourseWorkAdmin.Models;
 using System.IO;
@@ -61,6 +61,18 @@ namespace CourseWorkAdmin
                 MessageBox.Show(ex.InnerException.ToString());
                 return false;
             }
+        }
+        public static double DataToDouble(DateTime dt)
+        {
+            return Double.Parse(dt.ToString("HH")) + ((double)dt.Minute) / 60.0;
+        }
+        public static double TimeSpanToDouble(TimeSpan ts)
+        {
+            return Math.Abs(ts.TotalMinutes / 60.0);
+        }
+        public static bool IsNight(DateTime dt)
+        {
+            return (dt.Hour < 8 || dt.Hour > 23);
         }
     }
 }

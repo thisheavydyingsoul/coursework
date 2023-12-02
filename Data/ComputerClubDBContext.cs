@@ -1,9 +1,9 @@
 ﻿using CourseWorkAdmin.Models;
-using CourseWorkAdmins.Models;
+using CourseWorkAdmin.Models;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace CourseWorkAdmins.Data
+namespace CourseWorkAdmin.Data
 {
     public class ComputerClubDBContext : DbContext
     {

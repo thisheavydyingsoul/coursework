@@ -1,6 +1,6 @@
 ﻿using CourseWorkAdmin.Models;
-using CourseWorkAdmins.Data;
-using CourseWorkAdmins.Models;
+using CourseWorkAdmin.Data;
+using CourseWorkAdmin.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -50,10 +50,10 @@ namespace CourseWorkAdmin.Views
                     a => a.Username == DataHelper.username).Include(a => a.Office).FirstOrDefault();
             string name = namebox.Text;
             string type = typebox.Text;
-            string condition = conditionbox.Text;
+            bool condition = (bool)conditionbox.IsChecked;
             string description = descriptionbox.Text;
             //Checking if all neccessary fields are filled
-            if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(type) || String.IsNullOrEmpty(condition) || String.IsNullOrEmpty(dayratebox.Text) || String.IsNullOrEmpty(nightratebox.Text) || String.IsNullOrEmpty(description) || device.Picture == null)
+            if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(type) || String.IsNullOrEmpty(dayratebox.Text) || String.IsNullOrEmpty(nightratebox.Text) || String.IsNullOrEmpty(description) || device.Picture == null)
             {
                 MessageBox.Show("Введите все необходимые значения!");
                 return;

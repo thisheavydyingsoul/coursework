@@ -1,5 +1,5 @@
-﻿using CourseWorkAdmins.Data;
-using CourseWorkAdmins.Models;
+﻿using CourseWorkAdmin.Data;
+using CourseWorkAdmin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
 ﻿using CourseWorkAdmin.Migrations;
 using CourseWorkAdmin.Models;
-using CourseWorkAdmins.Data;
-using CourseWorkAdmins.Models;
+using CourseWorkAdmin.Data;
+using CourseWorkAdmin.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

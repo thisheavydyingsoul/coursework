@@ -1,8 +1,10 @@
-﻿using CourseWorkAdmins.Data;
-using CourseWorkAdmins.Models;
+﻿using CourseWorkAdmin.Models;
+using CourseWorkAdmin.Data;
+using CourseWorkAdmin.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -24,11 +26,15 @@ namespace CourseWorkAdmin.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-   
+
     public partial class HRWindow : Window
     {
         Administrator[] administrators;
         Office[] offices;
+        private static string[] CountStatuses = { "Завершена", "Завершена заранее", "Отменена без возврата" };
+        Hashtable officeSums;
+        Hashtable deviceSums;
+        Hashtable clientSums;
         public HRWindow()
         {
             InitializeComponent();
@@ -37,7 +43,68 @@ namespace CourseWorkAdmin.Views
             AdminsList.ItemsSource = administrators;
             offices = context.Offices.Include(o => o.Administrators).ToArray();
             OfficeList.ItemsSource = offices;
+            officeSums = new Hashtable();
+            deviceSums = new Hashtable();
+            clientSums = new Hashtable();
+            Device[] ds = context.Devices.GroupBy(d => d.Name).Select(d => d.FirstOrDefault()).ToArray();
+            Client[] clients = context.Clients.ToArray();
+            foreach (Device d in ds)
+            {
+                deviceSums.Add(d.Name, 0);
+            }
+            foreach (Office o in offices)
+            {
+                officeSums.Add(o.Adress, 0);
+            }
+            foreach (Client c in clients)
+            {
+                clientSums.Add(c.Username, 0);
+            }
+            int sum = 0;
+            for (int i = 0; i < offices.Length; i++)
+            {
+                Rent[] rents = context.Rents.Where(r => r.Device.Office.Id == offices[i].Id && CountStatuses.Contains(r.Status)).Include(r => r.Device).ToArray();
+                int officeSum = 0;
+                foreach (Rent r in rents)
+                {
+                    if (!(r.StartDT.Month == DateTime.Now.Month && r.StartDT.Year == DateTime.Now.Year))
+                        continue;
+                    double start = DataHelper.DataToDouble(r.StartDT);
+                    double end = DataHelper.DataToDouble(r.EndDT);
+                    double full = end - start > 0 ? end - start : end - start + 12.0;
+                    double day = 0; double night = 0;
+                    if ((start < 8.0 && full < 8.0 - start) || (start > 23.0 && full < 9.0 - start))
+                        night = full;
+                    else if (start < 23.0 && full < 23.0 - start)
+                        day = full;
+                    else if (start > 8.0 && full > 23.0 - start)
+                    {
+                        day = 23.0 - start;
+                        night = full - day;
+                    }
+                    else
+                    {
+                        day = start - 8.0;
+                        night = full - day;
+                    }
+                    double coef;
+                    if (context.Promos.Where(p => p.StartDate < r.StartDT && p.EndDate > r.StartDT).Count() > 0)
+                        coef = context.Promos.Where(p => p.StartDate < r.StartDT && p.EndDate > r.StartDT).Max(p => p.Coefficient) / 100.0;
+                    else
+                        coef = 1;
+                    officeSum += (int)((day * r.Device.DayRate + night * r.Device.NightRate) * coef);
+                    deviceSums[r.Device.Name] = (int)deviceSums[r.Device.Name] + (int)((day * r.Device.DayRate + night * r.Device.NightRate) * coef);
+                    clientSums[r.Client.Username] = (int)clientSums[r.Client.Username] + (int)((day * r.Device.DayRate + night * r.Device.NightRate) * coef);
 
+                }
+                officeSums[offices[i].Adress] = (int)officeSums[offices[i].Adress] + officeSum;
+
+                sum += officeSum;
+            }
+            RevenueList.ItemsSource = officeSums;
+            DeviceRevenueList.ItemsSource = deviceSums;
+            ClientRevenueList.ItemsSource = clientSums;
+            SumBox.Text = string.Format("{0} руб.", sum);
         }
 
         private void SearchAdminBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -86,7 +153,7 @@ namespace CourseWorkAdmin.Views
                 MessageBox.Show("В данном офисе пока никто не работает");
                 return;
             }
-            Administrator[] admins= selected.Administrators.ToArray();
+            Administrator[] admins = selected.Administrators.ToArray();
             AdminsView adminsView = new AdminsView(admins);
             adminsView.Show();
         }
@@ -122,7 +189,7 @@ namespace CourseWorkAdmin.Views
             AddAdmin addAdmin = new AddAdmin();
             addAdmin.addedhandler = RefreshAdmins;
             addAdmin.Show();
-            
+
         }
 
         private void AddOffice(object sender, RoutedEventArgs e)

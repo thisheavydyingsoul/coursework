@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseWorkAdmin.Migrations
 {
     [DbContext(typeof(ComputerClubDBContext))]
-    [Migration("20231106160326_DeviceGameFix")]
-    partial class DeviceGameFix
+    [Migration("20231118182906_FixDeviceConditions")]
+    partial class FixDeviceConditions
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,35 @@ namespace CourseWorkAdmin.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CourseWorkAdmin.Models.Client", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Balance")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fullname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Username");
+
+                    b.ToTable("Clients");
+                });
+
             modelBuilder.Entity("CourseWorkAdmin.Models.DeviceGame", b =>
                 {
                     b.Property<int>("DeviceId")
@@ -32,10 +61,7 @@ namespace CourseWorkAdmin.Migrations
                         .HasColumnOrder(0);
 
                     b.Property<string>("GameName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("Installed")
-                        .HasColumnType("bit")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnOrder(1);
 
                     b.HasKey("DeviceId", "GameName");
@@ -45,7 +71,24 @@ namespace CourseWorkAdmin.Migrations
                     b.ToTable("DevicesGames");
                 });
 
-            modelBuilder.Entity("CourseWorkAdmin.Models.Event", b =>
+            modelBuilder.Entity("CourseWorkAdmin.Models.Game", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Picture")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("CourseWorkAdmin.Models.Promo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,30 +106,66 @@ namespace CourseWorkAdmin.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte[]>("Picture")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events");
+                    b.ToTable("Promos");
                 });
 
-            modelBuilder.Entity("CourseWorkAdmin.Models.Game", b =>
+            modelBuilder.Entity("CourseWorkAdmin.Models.Rent", b =>
                 {
-                    b.Property<string>("Name")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClientUsername")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Description")
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Picture")
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientUsername");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("Rents");
+                });
+
+            modelBuilder.Entity("CourseWorkAdmin.Models.Review", b =>
+                {
+                    b.Property<int>("RentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Contents")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Name");
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
-                    b.ToTable("Games");
+                    b.HasKey("RentId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("CourseWorkAdmin.Models.Administrator", b =>
@@ -137,10 +216,8 @@ namespace CourseWorkAdmin.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Condition")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<bool>("Condition")
+                        .HasColumnType("bit");
 
                     b.Property<int>("DayRate")
                         .HasColumnType("int");
@@ -161,7 +238,6 @@ namespace CourseWorkAdmin.Migrations
                         .HasColumnType("int");
 
                     b.Property<byte[]>("Picture")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Type")
@@ -236,6 +312,34 @@ namespace CourseWorkAdmin.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("CourseWorkAdmin.Models.Rent", b =>
+                {
+                    b.HasOne("CourseWorkAdmin.Models.Client", "Client")
+                        .WithMany("Rents")
+                        .HasForeignKey("ClientUsername");
+
+                    b.HasOne("CourseWorkAdmin.Models.Device", "Device")
+                        .WithMany("Rents")
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Device");
+                });
+
+            modelBuilder.Entity("CourseWorkAdmin.Models.Review", b =>
+                {
+                    b.HasOne("CourseWorkAdmin.Models.Rent", "Rent")
+                        .WithOne("Review")
+                        .HasForeignKey("CourseWorkAdmin.Models.Review", "RentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rent");
+                });
+
             modelBuilder.Entity("CourseWorkAdmin.Models.Administrator", b =>
                 {
                     b.HasOne("CourseWorkAdmin.Models.Office", "Office")
@@ -267,9 +371,19 @@ namespace CourseWorkAdmin.Migrations
                     b.Navigation("Administrator");
                 });
 
+            modelBuilder.Entity("CourseWorkAdmin.Models.Client", b =>
+                {
+                    b.Navigation("Rents");
+                });
+
             modelBuilder.Entity("CourseWorkAdmin.Models.Game", b =>
                 {
                     b.Navigation("DevicesGames");
+                });
+
+            modelBuilder.Entity("CourseWorkAdmin.Models.Rent", b =>
+                {
+                    b.Navigation("Review");
                 });
 
             modelBuilder.Entity("CourseWorkAdmin.Models.Administrator", b =>
@@ -280,6 +394,8 @@ namespace CourseWorkAdmin.Migrations
             modelBuilder.Entity("CourseWorkAdmin.Models.Device", b =>
                 {
                     b.Navigation("DevicesGames");
+
+                    b.Navigation("Rents");
                 });
 
             modelBuilder.Entity("CourseWorkAdmin.Models.Office", b =>

@@ -1,0 +1,31 @@
+﻿<Window x:Class="CourseWorkAdmin.Views.RentList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWorkAdmin.Views"
+        mc:Ignorable="d"
+        Title="Аренды" Height="450" Width="800">
+    <Grid Style="{StaticResource GridStyle}">
+        <DataGrid Name ="RentsList" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Клиент" Binding="{Binding Client.Username}"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+                <DataGridTextColumn Header="Дата и время начала" Binding="{Binding StartDT}"/>
+                <DataGridTextColumn Header="Дата и время окончания" Binding="{Binding EndDT}"/>
+                <DataGridTextColumn Header="Оценка" Binding="{Binding Review.Rating}"/>
+                <DataGridTemplateColumn Width="250">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button 
+                                Click="ShowReview" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Stretch"
+                                Content = "Просмотр отзыва"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

@@ -1,5 +1,5 @@
-﻿using CourseWorkAdmins.Data;
-using CourseWorkAdmins.Models;
+﻿using CourseWorkAdmin.Data;
+using CourseWorkAdmin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,7 +125,7 @@ namespace CourseWorkAdmin.Views
                 else log.Contents += "действующий сотрудник";
                 changed = true;
             }
-            context.Entry(notchangedAdm).CurrentValues.SetValues(changedAdm);
+            context.Update(changedAdm);
             DataHelper.TrySaving(context);
             log.Administrator = context.Administrators.Single(
                 a => a.Username == DataHelper.username);

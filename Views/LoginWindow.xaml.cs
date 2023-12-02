@@ -1,5 +1,5 @@
-﻿using CourseWorkAdmins.Data;
-using CourseWorkAdmins.Models;
+﻿using CourseWorkAdmin.Data;
+using CourseWorkAdmin.Models;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using System;

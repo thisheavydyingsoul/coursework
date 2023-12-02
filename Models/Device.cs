@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Windows.Controls;
 
-namespace CourseWorkAdmins.Models
+namespace CourseWorkAdmin.Models
 {
     public class Device
     {
@@ -19,8 +19,7 @@ namespace CourseWorkAdmins.Models
         [MaxLength(20)]
         public string Name { get; set; } = null!;
 
-        [MaxLength(20)]
-        public string Condition { get; set; } = null!;
+        public bool Condition { get; set; }
 
         public int DayRate { get; set; }
 
